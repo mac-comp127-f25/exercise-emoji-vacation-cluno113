@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
 @SuppressWarnings("SameParameterValue")
 public class EmojiVacation {
+
     private static final Color
         SUN_YELLOW = new Color(0xffff78),
         SUN_BORDER_YELLOW = new Color(0xdcdc3c),
@@ -46,12 +48,26 @@ public class EmojiVacation {
         // TODO: [Instructions step 2] Create mountains 50% of the time.
         //       You should randomly determine the size and number of layers
         //       (within reasonable constraints).
+        if (random.nextBoolean()) {
+            double baseY = 400;
+            double size = 120 + random.nextDouble() * 80;
+            int layers = 1 + random.nextInt(3);
+
+            addMountains(canvas, baseY, size, layers);
+        }
 
         addGround(canvas, 400);
 
         // TODO: [Instructions step 2] Create forests 60% of the time. You should randomly
         //       determine the count for the number of trees. Pick reasonable values for
         //       other parameters.
+        if (random.nextInt(100) < 60){
+            double baseY = 400 - random.nextDouble() * 20;
+            double ySpan = 100;
+            int count = randomInt(5, 20);
+
+            addForest(canvas, baseY, ySpan, count);
+        }
 
         List<GraphicsGroup> family = createFamily(2, 3);
         positionFamily(family, 60, 550, 20);
