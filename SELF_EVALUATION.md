@@ -47,12 +47,14 @@ Briefly reflect in writing on your experience solving this exercise. Just a
 sentence or two in response to each question is plenty.
 
 **What did you miss? What did you wish you did better?**
-
+I had a hard time getting started on this exercise as the amount of code overwhelmed me. I wish I did better in reading the instructions fully before I started to tweak with the code as I had to go back and reconfigure my work.
 
 
 **What challenges did you face, and how did you overcome them?**
+I faced challenges in understanding the organization and instruction of the exercises for this assignment. I overcame them because I realized how each step uncovered things already built in such as the random method. 
 
 
 
-**What is something that was interesting or exciting, or a lesson you learned
-  from this experience that you want to remember?**
+**What is something that was interesting or exciting, or a lesson you learned from this experience that you want to remember?**
+
+Something that I enjoyed was how it reminded me a lot of the activities I did in COMP 123. It allowed me to better understand how I can use and navigate java to create visualizations.

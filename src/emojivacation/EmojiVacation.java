@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
 @SuppressWarnings("SameParameterValue")
 public class EmojiVacation {
+
     private static final Color
         SUN_YELLOW = new Color(0xffff78),
         SUN_BORDER_YELLOW = new Color(0xdcdc3c),
@@ -33,7 +35,13 @@ public class EmojiVacation {
 
     private static void doSlideShow(CanvasWindow canvas) {
         // TODO: [Instructions step 8] Change this to an actual slideshow
+        while (true) {
         generateVacationPhoto(canvas);
+        canvas.draw();
+        canvas.pause(1000);
+        canvas.removeAll();
+        }
+
     }
 
     private static void generateVacationPhoto(CanvasWindow canvas) {
@@ -46,16 +54,31 @@ public class EmojiVacation {
         // TODO: [Instructions step 2] Create mountains 50% of the time.
         //       You should randomly determine the size and number of layers
         //       (within reasonable constraints).
+        if (percentChance(50)) {
+            double size = 120 + random.nextDouble() * 80;
+            int layers = 1 + random.nextInt(3);
+
+            addMountains(canvas, 400, size, layers);
+        }
 
         addGround(canvas, 400);
 
         // TODO: [Instructions step 2] Create forests 60% of the time. You should randomly
         //       determine the count for the number of trees. Pick reasonable values for
         //       other parameters.
+        if (percentChance(60)){
+            double baseY = 400 - random.nextDouble() * 20;
+            int count = randomInt(5, 20);
+
+            addForest(canvas, baseY, 100, count);
+        }
 
         List<GraphicsGroup> family = createFamily(2, 3);
         positionFamily(family, 60, 550, 20);
         // TODO: [Instructions step 4] Add each emoji in the list to the canvas
+        for (GraphicsGroup emoji : family) {
+            canvas.add(emoji);
+        }
     }
 
     // –––––– Emoji family –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
@@ -70,9 +93,18 @@ public class EmojiVacation {
         // Hint: You can't use List.of() to do this, because you don't know the size of the
         // resulting list before the code actually runs. What can you use?
         //
-        return List.of(
-            createRandomEmoji(adultSize),
-            createRandomEmoji(childSize));
+        List<GraphicsGroup> family = new ArrayList<>();
+
+        for (int i = 0; i < adultCount; i++){
+            family.add(createRandomEmoji(adultSize));
+        }
+
+        for (int i = 0; i < childCount; i++) {
+            family.add(createRandomEmoji(childSize));
+        }
+
+        return family;
+        
     }
 
     private static GraphicsGroup createRandomEmoji(double size) {
@@ -83,7 +115,23 @@ public class EmojiVacation {
         // type A, else with some other probability return emoji type B, else with a certain
         // probability ... etc ... else return a smiley by default.
         //
-        return ProvidedEmojis.createSmileyFace(size);
+
+        int pick = randomInt(0, 5);
+
+        if (pick == 0){
+            return ProvidedEmojis.createSmileyFace(size);
+        } else if (pick == 1) {
+            return ProvidedEmojis.createFrownyFace(size);
+        } else if (pick == 2) {
+            return ProvidedEmojis.createWinkingFace(size);
+        } else if (pick == 3) {
+            return ProvidedEmojis.createNauseousFace(size);
+        } else if (pick == 4) {
+            return ProvidedEmojis.createContentedFace(size);
+        } else {
+            return ProvidedEmojis.createSmileyFace(size);
+        }
+        
     }
 
     private static void positionFamily(
@@ -92,6 +140,19 @@ public class EmojiVacation {
             double baselineY,
             double spacing
     ) {
+        double x = leftX;
+
+        for (GraphicsGroup emoji : family) {
+            double width = emoji.getWidth();
+            double height = emoji.getHeight();
+
+            double y = baselineY - height;
+
+            emoji.setPosition(x, y);
+
+            x += width + spacing;
+        }
+
         // TODO: [Instructions step 5] Iterate over the emojis in the list,
         //       and position them all in a neat row
 
